@@ -3,8 +3,8 @@
 Portofolio web interaktif premium yang dirancang untuk menampilkan karya di bidang Web/Mobile Development dan UI/UX Design, terintegrasi langsung secara real-time dengan database Google Firebase.
 
 ## 🚀 Live Demo
-Akses website portofolio secara langsung melalui tautan berikut: 
-👉 **[https://portfolio-premium-sigma.vercel.app/]**
+Akses website portofolio secara langsung di sini:  
+🌐 **[Kelvin Julian Portfolio](https://portfolio-premium-sigma.vercel.app/)**
 
 ## 🛠️ Tech Stack & Fitur Utama
 - **Frontend Framework:** Tailwind CSS (Modern Grid Layout, Custom Fluid Typography, & Glassmorphism design)
