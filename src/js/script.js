@@ -26,29 +26,6 @@ const db = getFirestore(app);
     }
 })();
 
-// Client-side HTML Component Loader
-async function loadComponents() {
-    const elements = document.querySelectorAll('[data-include]');
-    const promises = Array.from(elements).map(async (el) => {
-        const file = el.getAttribute('data-include');
-        try {
-            const response = await fetch(file);
-            if (response.ok) {
-                const html = await response.text();
-                // Replace placeholder element with the fetched HTML content
-                el.outerHTML = html;
-            } else {
-                console.error(`Failed to load component: ${file}`);
-            }
-        } catch (error) {
-            console.error(`Error loading component ${file}:`, error);
-        }
-    });
-    
-    // Wait for all component files to be loaded into the DOM
-    await Promise.all(promises);
-}
-
 // Global project filtering function so it can be called from HTML onclick attributes
 function filterProjects(category) {
     const cards = document.querySelectorAll('.project-card');
@@ -151,8 +128,6 @@ window.handleFormSubmit = async function(e) {
 
 // Initialization function
 async function init() {
-    // 1. Load HTML components
-    await loadComponents();
     
     // 2. Initialize Dark Mode Toggle
     const themeToggle = document.getElementById('theme-toggle');

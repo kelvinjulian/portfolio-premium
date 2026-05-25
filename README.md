@@ -50,5 +50,7 @@ Belajar-Antigravity/
 
 ## ⚙️ Cara Menjalankan Secara Lokal
 1. Clone repositori ini ke komputer Anda.
-2. Pastikan Anda telah mengonfigurasi objek `firebaseConfig` asli Anda di dalam file `src/js/script.js`.
-3. Jalankan file `index.html` menggunakan ekstensi Live Server di IDE Anda atau buka langsung via browser di alamat localhost Anda.
+2. Buka terminal di dalam direktori `portfolio` lalu jalankan perintah `npm install` untuk menginstal seluruh dependensi.
+3. Pastikan Anda telah mengonfigurasi objek `firebaseConfig` asli Anda di dalam file `src/js/script.js`.
+4. Jalankan perintah `npm run dev` untuk menyalakan Vite Dev Server secara lokal.
+5. Untuk mem-build bundel produksi statis (yang akan dideploy di hosting seperti Vercel), jalankan perintah `npm run build`.

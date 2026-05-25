@@ -1,80 +1,66 @@
-# Integrasi Formulir Kontak dengan Firebase Cloud Firestore
+# Rencana Implementasi: Migrasi Proyek ke Vite Dev Server
 
-Rencana ini merinci langkah-langkah untuk menghubungkan formulir kontak di website portofolio ke Google Firebase Cloud Firestore secara real-time dengan menggunakan SDK Firebase Modular v10 via CDN.
+Rencana ini merinci langkah-langkah untuk memigrasikan website portofolio statis Anda ke proyek berbasis Vite Dev Server & Build System dengan menggunakan plugin `vite-plugin-html-inject` untuk mengelola pemisahan komponen HTML secara statis saat build-time.
 
 ## User Review Required
 
 > [!IMPORTANT]
-> **Perubahan script.js Menjadi Modul ES6 (`type="module"`):**
+> **Modifikasi Komponen HTML Statis (Vite Injection):**
 >
-> - Untuk mengimpor SDK Firebase Modular terbaru secara langsung di browser tanpa build step (seperti Webpack/Vite), kita perlu mengubah cara pemuatan `script.js` di index.html dengan menambahkan atribut `type="module"`.
-> - Modul ES6 memiliki cakupan terisolasi. Oleh karena itu, fungsi-fungsi yang dipanggil langsung dari atribut HTML (seperti `onsubmit="handleFormSubmit(event)"` dan `onclick="filterProjects(...)"`) harus secara eksplisit tetap diikat ke objek `window`. Hal ini sudah didukung dengan baik pada kode `script.js` saat ini.
+> - Kita akan menggunakan tag `<load src="src/components/[Component].html" />` menggantikan penampung `<div data-include="..."></div>`. Hal ini diproses oleh Vite pada saat build-time, sehingga browser menerima kode HTML lengkap yang siap pakai tanpa dependensi loading dinamis (fetch client-side).
+>
+> **Penyederhanaan JavaScript:**
+>
+> - Karena pemuatan komponen sudah ditangani oleh Vite secara statis, kita akan menghapus fungsi `loadComponents()` dan pemanggilannya dari `src/js/script.js`. Hal ini akan membuat pemuatan halaman jauh lebih cepat dan terhindar dari masalah CORS/race condition.
 
 > [!TIP]
-> **Efek Loading Premium pada Tombol Submit:**
+> **Konfigurasi Server & Build Script:**
 >
-> - Saat pengiriman data berlangsung, tombol kirim akan dinonaktifkan (disabled) dan teksnya akan berganti menjadi animasi spinner loading dengan teks "Mengirim..." untuk meningkatkan pengalaman pengguna (user experience) standar industri.
+> - Kita akan menambahkan script dev dan build standar pada `package.json` agar Anda cukup menjalankan `npm run dev` untuk pengembangan lokal, dan `npm run build` untuk menghasilkan bundel produksi yang siap dideploy ke Vercel.
 
 ## Open Questions
 
-_Tidak ada pertanyaan terbuka saat ini._
+*Tidak ada pertanyaan terbuka saat ini.*
 
 ---
 
 ## Proposed Changes
 
-### Integrasi Firebase SDK & Pemrosesan Kontak
+### 1. Inisialisasi Proyek & Depedensi Vite
 
-#### [MODIFY] index.html (d:/Code/Belajar-Antigravity/index.html)
+#### [NEW] package.json (d:/Code/Belajar-Antigravity/portfolio/package.json)
+- Membuat file `package.json` baru dengan definisi script (`dev`, `build`, `preview`) dan dependensi pembangunan (`vite` dan `vite-plugin-html-inject`).
 
-- Mengubah baris pemuatan `script.js` di bagian bawah dari `<script src="src/js/script.js" defer></script>` menjadi `<script src="src/js/script.js" type="module"></script>`.
+#### [NEW] vite.config.js (d:/Code/Belajar-Antigravity/portfolio/vite.config.js)
+- Menambahkan file konfigurasi Vite untuk memuat plugin `vite-plugin-html-inject`.
 
-#### [MODIFY] script.js (d:/Code/Belajar-Antigravity/src/js/script.js)
+---
 
-- Menambahkan impor fungsi modular Firebase App dan Firestore dari Google CDN di bagian paling atas file.
-- Menginisialisasi Firebase menggunakan objek konfigurasi yang diberikan oleh pengguna.
-- Memperbarui handler `window.handleFormSubmit` menjadi fungsi `async` yang mengirim data (nama, email, subjek, pesan, dan timestamp dari server) ke Firestore koleksi `messages`.
-- Menambahkan status loading (spinner & penonaktifan tombol) saat data sedang dikirim.
-- Menampilkan modal sukses setelah Firestore berhasil menyimpan data, lalu melakukan reset pada formulir.
+### 2. Komponen & Penyesuaian HTML
+
+#### [MODIFY] index.html (d:/Code/Belajar-Antigravity/portfolio/index.html)
+- Mengubah tag pemuatan komponen dinamis:
+  - `<div data-include="src/components/Navbar.html"></div>` menjadi `<load src="src/components/Navbar.html" />`
+  - `<div data-include="src/components/Hero.html"></div>` menjadi `<load src="src/components/Hero.html" />`
+  - `<div data-include="src/components/Footer.html"></div>` menjadi `<load src="src/components/Footer.html" />`
+
+#### [MODIFY] script.js (d:/Code/Belajar-Antigravity/portfolio/src/js/script.js)
+- Menghapus definisi fungsi `loadComponents()` dari kode JavaScript.
+- Menghapus panggilan `await loadComponents()` dari fungsi `init()`.
+
+---
+
+### 3. Dokumentasi Repositori
+
+#### [MODIFY] README.md (d:/Code/Belajar-Antigravity/portfolio/README.md)
+- Memperbarui panduan lokal untuk menjelaskan penggunaan Vite (`npm install` dan `npm run dev`).
 
 ---
 
 ## Verification Plan
 
 ### Manual Verification
-
-1. Isi formulir kontak di halaman web dengan data uji coba, lalu klik tombol **Kirim Pesan Sekarang**.
-2. Pastikan tombol berubah menjadi status loading "Mengirim..." dan tidak dapat diklik kembali selama pengiriman.
-3. Pastikan modal sukses muncul setelah pengiriman selesai dan isi input formulir kembali kosong.
-4. Periksa Firebase Console Firestore Database proyek Anda untuk memastikan dokumen baru telah masuk ke dalam koleksi `messages` dengan atribut `name`, `email`, `subject`, `message`, dan `timestamp` yang tepat.
-
----
-
-## Progres & Pembaruan - 25 Mei 2026
-
-### 1. Perombakan Visual Komponen Proyek (Card Layout Overhaul)
-
-- **Implementasi:** Mengintegrasikan 5 aset gambar proyek riil (Luar Sekolah LMS, WebSewaMobil, Golden Bites, Nike Website Concept, dan Food Delivery App) menggunakan aspek rasio modern 'aspect-[4/3]'/'aspect-video' dan properti 'object-cover' agar responsif.
-- **Catatan Desain:** Menggunakan visual mockup bawaan dari gambar asli dan meniadakan bingkai tiruan CSS untuk menghindari distorsi visual (gambar gepeng/terpotong).
-- **Fitur Tambahan:** Mengaktifkan sistem filter kategori dinamis ("Semua", "Web & Mobile Dev", "UI/UX Design") menggunakan JavaScript dan Tailwind CSS, serta menambahkan micro-interactions (efek hover scale dan shadow premium).
-
-### 2. Integrasi Ikon Media Sosial (SVG Inline Migration)
-
-- **Masalah Sebelumnya:** Terjadi race condition (balapan load kode) pada CDN JavaScript Lucide Icons akibat sistem pemuatan komponen dinamis, sehingga ikon tidak muncul (hanya kotak warna).
-- **Solusi Industri:** Melakukan migrasi penuh dari tag `<i data-lucide="...">` ke kode SVG Inline murni untuk ikon GitHub, LinkedIn, dan Figma.
-- **Hasil:** Ikon 100% aman, terkunci, langsung dirender oleh browser, dan kompatibel penuh baik di mode terang maupun gelap tanpa bergantung pada eksekusi JavaScript eksternal. Tautan href juga telah diarahkan ke akun profil asli (GitHub, LinkedIn) dan spesifik draf proyek (Figma Nike).
-
-### 3. Integrasi Backend Serverless (Google Firebase Cloud Firestore)
-
-Mengeksplorasi fitur canggih dengan mengubah formulir kontak statis menjadi dinamis dan terhubung ke database cloud secara real-time.
-
-- **Langkah Setup Firebase Console:**
-  1. Membuat proyek baru bernama `portfolio-kelvin-4ed0c`.
-  2. Mengaktifkan 'Firestore Database' dalam _Test Mode_ (akses baca-tulis terbuka untuk testing lokal) dengan lokasi server terdekat (`asia-southeast1` Singapura).
-  3. Mendaftarkan aplikasi baru berbasis "Web App (</>)" untuk mendapatkan Firebase Configuration Object dengan domain penyimpanan terbaru (`.firebasestorage.app`).
-- **Implementasi Kode:**
-  - Menghubungkan SDK Firebase v9/v10 Modular via CDN dengan konfigurasi atribut `type="module"` pada tag script di `index.html` untuk menghindari eror _SyntaxError: Cannot use import statement outside a module_.
-  - Menggunakan metode `addDoc` dan `serverTimestamp()` pada `script.js` untuk mengirim data (nama, email, subjek, pesan) ke koleksi bernama `"messages"`.
-- **Analisis Alur Data & Email:**
-  - Perbedaan antara email akun admin Firebase (julianputrakelvin@gmail.com), email statis di teks web (klvinjulianputra@gmail.com), dan email testing pengirim (kelvinjulian@upi.edu) tidak memengaruhi validitas data. Jalur pengiriman murni menggunakan token enkripsi `firebaseConfig`.
-  - Data yang dikirim pengunjung tidak masuk ke Gmail, melainkan masuk dan dipantau langsung melalui dasbor _Firebase Console -> Firestore Database -> Koleksi 'messages' -> Documents_.
+1. Buka terminal di dalam direktori `portfolio` lalu jalankan perintah `npm install` diikuti dengan `npm run dev` untuk menyalakan Vite dev server.
+2. Akses alamat localhost yang diberikan oleh Vite (biasanya `http://localhost:5173`) di browser.
+3. Pastikan komponen Navbar, Hero, dan Footer ter-inject dengan sempurna dan fungsionalitas interaktif web (filter proyek, tombol dark mode) tetap berjalan normal tanpa eror di konsol.
+4. Jalankan perintah `npm run build` untuk memverifikasi proses build produksi berhasil tanpa eror dan menghasilkan folder `dist` yang berisi hasil kompilasi bersih.
