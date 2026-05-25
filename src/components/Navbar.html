@@ -1,0 +1,46 @@
+<nav class="w-full sticky top-0 z-50 transition-all duration-300 py-5" id="navbar">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2 group">
+            <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center text-white font-outfit font-bold text-xl shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-300">K</span>
+            <span class="font-outfit font-bold text-xl tracking-tight text-slate-800 dark:text-slate-100 group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">Kelvin<span class="text-brand-600">.</span></span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600 dark:text-slate-300">
+            <a href="#" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Beranda</a>
+            <a href="#about" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Tentang</a>
+            <a href="#projects" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Proyek</a>
+            <a href="#contact" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Kontak</a>
+        </nav>
+
+        <!-- CTA Button & Menu Toggle & Theme Toggle -->
+        <div class="flex items-center gap-3">
+            <!-- Theme Toggle Switch -->
+            <button id="theme-toggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all duration-300 flex items-center justify-center cursor-pointer" aria-label="Toggle Dark Mode">
+                <i id="theme-toggle-icon" data-lucide="moon" class="w-4.5 h-4.5"></i>
+            </button>
+
+            <!-- Start Project CTA -->
+            <a href="#contact" class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-slate-100 hover:bg-brand-600 dark:hover:bg-brand-500 text-white dark:text-slate-950 dark:hover:text-white font-medium text-sm transition-all shadow-sm hover:shadow-lg hover:shadow-brand-500/20 hover:-translate-y-0.5 duration-300">
+                Mulai Proyek
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors cursor-pointer" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden md:hidden w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-b border-slate-100 dark:border-slate-800/80 shadow-lg absolute top-full left-0 py-6 px-6 flex flex-col gap-4 transition-all duration-300">
+        <a href="#" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2 border-b border-slate-50 dark:border-slate-800/50">Beranda</a>
+        <a href="#about" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2 border-b border-slate-50 dark:border-slate-800/50">Tentang</a>
+        <a href="#projects" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2 border-b border-slate-50 dark:border-slate-800/50">Proyek</a>
+        <a href="#contact" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2">Kontak</a>
+        <a href="#contact" class="mobile-link mt-2 inline-flex items-center justify-center w-full py-3 rounded-xl bg-brand-600 dark:bg-brand-500 text-white font-medium text-center shadow-md">
+            Mulai Proyek
+        </a>
+    </div>
+</nav>
