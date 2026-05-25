@@ -1,20 +1,21 @@
-# 🌌 Modern Web Portfolio - Full-Stack Serverless
+# 🌌 Modern Web Portfolio – Full-Stack Serverless
 
-Portofolio web interaktif premium yang dirancang untuk menampilkan karya di bidang Web/Mobile Development dan UI/UX Design, terintegrasi langsung secara real-time dengan database Google Firebase.
+A premium interactive portfolio website built to showcase projects in Web Development, Mobile Development, and UI/UX Design, seamlessly integrated with Google Firebase for real-time content management.
 
 ## 🚀 Live Demo
-Akses website portofolio secara langsung di sini:  
+Explore the portfolio here:  
 🌐 **[Kelvin Julian Portfolio](https://portfolio-premium-sigma.vercel.app/)**
 
-## 🛠️ Tech Stack & Fitur Utama
-- **Frontend Framework:** Tailwind CSS (Modern Grid Layout, Custom Fluid Typography, & Glassmorphism design)
-- **Database Backend:** Google Firebase Cloud Firestore (v9/v10 Modular SDK via Inline Script Modules)
-- **Icons Architecture:** Handcrafted inline SVG injection untuk optimasi rendering asinkronus (Light/Dark Mode friendly)
-- **Interactive UI:** Sistem Filter Kategori Proyek berbasis Tab Filter Dinamis (JavaScript DOM Manipulation)
-- **Theme Engine:** Mode Gelap (Dark Mode) otomatis tersimpan via JavaScript LocalStorage
+## 🛠️ Tech Stack & Key Features
+- **Frontend Framework:** Tailwind CSS (modern responsive grid layout, fluid typography, and glassmorphism-inspired UI)
+- **Backend Database:** Google Firebase Cloud Firestore (Modular SDK v9/v10)
+- **Icon System:** Handcrafted inline SVG architecture for optimized asynchronous rendering and full Light/Dark Mode compatibility
+- **Interactive UI:** Dynamic project category filtering powered by JavaScript DOM manipulation
+- **Theme Engine:** Persistent Dark Mode preference using browser LocalStorage
+- **Deployment:** Serverless deployment via Vercel
 
-## 📂 Struktur Proyek
-Berikut adalah visualisasi struktur direktori proyek ini:
+## 📂 Project Structure
+Project directory overview:
 
 ```text
 Belajar-Antigravity/
@@ -41,16 +42,61 @@ Belajar-Antigravity/
 └── README.md
 ```
 
-## 📦 Karya yang Dipamerkan
-1. **Luar Sekolah LMS** - Mobile App (Flutter, Dart, Cloud Firestore)
-2. **WebSewaMobil** - Full-Stack Web (Laravel 11, Filament, Next.js)
-3. **Golden Bites Snap CRUD** - E-Commerce Web (PHP/Laravel, Midtrans Snap API)
-4. **Nike Website Concept** - UI/UX Design (Figma, Typography, Visual Grid)
-5. **Food Delivery App** - Mobile UI/UX Case Study (Figma Prototype & UX Flow)
+## 📦 Featured Projects
 
-## ⚙️ Cara Menjalankan Secara Lokal
-1. Clone repositori ini ke komputer Anda.
-2. Buka terminal di dalam direktori `portfolio` lalu jalankan perintah `npm install` untuk menginstal seluruh dependensi.
-3. Pastikan Anda telah mengonfigurasi objek `firebaseConfig` asli Anda di dalam file `src/js/script.js`.
-4. Jalankan perintah `npm run dev` untuk menyalakan Vite Dev Server secara lokal.
-5. Untuk mem-build bundel produksi statis (yang akan dideploy di hosting seperti Vercel), jalankan perintah `npm run build`.
+### 1. Luar Sekolah LMS
+Mobile learning management system built with Flutter and Cloud Firestore.
+
+### 2. WebSewaMobil
+Full-stack car rental platform developed with Laravel 11, Filament, and Next.js.
+
+### 3. Golden Bites Snap CRUD
+E-commerce web application featuring product management and Midtrans Snap payment integration.
+
+### 4. Nike Website Concept
+UI/UX exploration focused on typography, visual hierarchy, and modern product presentation.
+
+### 5. Food Delivery App
+Mobile UI/UX case study with interactive prototype and end-to-end user flow design.
+
+---
+
+## ⚙️ Getting Started (Local Development)
+
+### 1. Clone this repository
+```bash
+git clone <repository-url>
+```
+
+### 2. Navigate into the project directory
+```bash
+cd portfolio
+```
+
+### 3. Install dependencies
+```bash
+npm install
+```
+
+### 4. Configure Firebase credentials
+Add your Firebase project configuration inside:
+
+```bash
+src/js/script.js
+```
+
+### 5. Start the local development server
+```bash
+npm run dev
+```
+
+### 6. Build for production
+```bash
+npm run build
+```
+
+---
+
+## 📄 License
+
+This portfolio project was created for personal branding and learning purposes.
