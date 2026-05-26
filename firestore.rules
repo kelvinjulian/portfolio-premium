@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Hanya izinkan operasi 'create' untuk koleksi 'contacts'
+    // Operasi 'read', 'update', dan 'delete' ditolak secara default untuk publik
+    match /contacts/{document} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // Sebagai bentuk kompatibilitas dengan kode sebelumnya yang menggunakan koleksi 'messages'
+    match /messages/{document} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // Aturan default: Kunci semua koleksi/dokumen lain dari akses publik
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
