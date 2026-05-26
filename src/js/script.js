@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import emailjs from '@emailjs/browser';
 
 // Firebase Configuration Object
 const firebaseConfig = {
@@ -14,6 +15,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// Initialize EmailJS
+emailjs.init("5qHCo4qiitgue61s-");
 
 // Run this early to prevent dark mode layout flash
 (function() {
@@ -80,10 +84,37 @@ window.closeModal = function() {
 window.handleFormSubmit = async function(e) {
     e.preventDefault();
     
+    // Ambil input form dan bersihkan spasi di awal/akhir
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const subject = document.getElementById('subject').value.trim();
+    const message = document.getElementById('message').value.trim();
+
+    // 1. Validasi input kosong (Nama, Email, Pesan)
+    if (!name) {
+        alert("Nama tidak boleh kosong.");
+        return;
+    }
+    if (!email) {
+        alert("Email tidak boleh kosong.");
+        return;
+    }
+    if (!message) {
+        alert("Pesan tidak boleh kosong.");
+        return;
+    }
+
+    // 2. Validasi format email menggunakan Regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Format email tidak valid.");
+        return;
+    }
+    
     const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
     
-    // Disable submit button and show loading state
+    // Disable submit button and show loading state (Double-Submit Protection)
     if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
@@ -95,19 +126,30 @@ window.handleFormSubmit = async function(e) {
         `;
     }
 
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-
     try {
-        await addDoc(collection(db, "messages"), {
+        // Menggunakan koleksi "contacts" sesuai dengan aturan firestore.rules baru
+        await addDoc(collection(db, "contacts"), {
             name: name,
             email: email,
             subject: subject,
             message: message,
             timestamp: serverTimestamp()
         });
+
+        // ✉️ Integrasi EmailJS untuk Notifikasi Email Instan ke Admin
+        try {
+            await emailjs.send("service_14g81vi", "template_1x6ck0y", {
+                name: name,
+                email: email,
+                title: subject,
+                message: message
+            });
+            console.log("EmailJS: Notifikasi email berhasil dikirim!");
+        } catch (emailError) {
+            // Menggunakan try-catch bersarang agar kegagalan notifikasi email tidak memicu dialog error
+            // pada pengguna akhir, karena data formulir sudah sukses masuk ke Firestore database.
+            console.error("EmailJS: Gagal mengirim notifikasi email:", emailError);
+        }
         
         const successModal = document.getElementById('success-modal');
         if (successModal) {
