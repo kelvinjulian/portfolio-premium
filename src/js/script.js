@@ -218,18 +218,18 @@ async function init() {
         const mobileLinks = document.querySelectorAll('.mobile-link');
         
         function toggleMenu() {
-            mobileMenu.classList.toggle('hidden');
-            if (mobileMenu.classList.contains('hidden')) {
-                menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
-            } else {
+            mobileMenu.classList.toggle('is-active');
+            if (mobileMenu.classList.contains('is-active')) {
                 menuBtn.innerHTML = '<i data-lucide="x" class="w-6 h-6"></i>';
+            } else {
+                menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
             }
             lucide.createIcons();
         }
 
         menuBtn.addEventListener('click', toggleMenu);
         mobileLinks.forEach(link => link.addEventListener('click', () => {
-            if (!mobileMenu.classList.contains('hidden')) {
+            if (mobileMenu.classList.contains('is-active')) {
                 toggleMenu();
             }
         }));

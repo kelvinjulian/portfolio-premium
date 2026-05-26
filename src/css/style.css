@@ -80,3 +80,20 @@ body {
 .animate-pulse-slow {
     animation: pulse-slow 8s ease-in-out infinite;
 }
+
+/* Mobile Menu Dropdown Animation */
+#mobile-menu {
+    transform: translateY(-16px) scale(0.95);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+}
+
+#mobile-menu.is-active {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
