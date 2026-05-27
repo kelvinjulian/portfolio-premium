@@ -232,33 +232,45 @@ async function init() {
 
         menuBtn.addEventListener('click', () => toggleMenu());
         
+        let isSmoothScrolling = false;
+        
+        const stopScroll = () => {
+            if (!isSmoothScrolling) return;
+            isSmoothScrolling = false;
+            window.scrollTo(window.scrollX, window.scrollY);
+            removeScrollListeners();
+        };
+        
+        const removeScrollListeners = () => {
+            window.removeEventListener('touchstart', stopScroll);
+            window.removeEventListener('wheel', stopScroll);
+        };
+
         mobileLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href');
+            link.addEventListener('click', () => {
+                // Disable transition temporarily to close the menu instantly.
+                // This prevents CSS transition layout calculations from conflict-locking 
+                // the browser's scroll container during the smooth scroll animation.
+                mobileMenu.style.transition = 'none';
+                toggleMenu(false);
                 
-                if (targetId === '#' || targetId === '#top-hero' || targetId === '#hero') {
-                    e.preventDefault();
-                    
-                    // Disable transition temporarily to close the menu instantly.
-                    mobileMenu.style.transition = 'none';
-                    toggleMenu(false);
-                    
-                    setTimeout(() => {
-                        window.scrollTo({
-                            top: 0,
-                            behavior: 'smooth'
-                        });
-                        mobileMenu.style.transition = '';
-                    }, 50);
-                } else {
-                    // Let the browser's native anchor navigation handle other links.
-                    mobileMenu.style.transition = 'none';
-                    toggleMenu(false);
-                    
-                    setTimeout(() => {
-                        mobileMenu.style.transition = '';
-                    }, 50);
-                }
+                // Track active smooth scroll to make it interruptible on user touch or scroll
+                isSmoothScrolling = true;
+                window.addEventListener('touchstart', stopScroll, { passive: true });
+                window.addEventListener('wheel', stopScroll, { passive: true });
+                
+                // Auto-cleanup listeners after 1.5 seconds if not interrupted
+                setTimeout(() => {
+                    if (isSmoothScrolling) {
+                        isSmoothScrolling = false;
+                        removeScrollListeners();
+                    }
+                }, 1500);
+                
+                // Restore the CSS transitions for subsequent manual menu toggles.
+                setTimeout(() => {
+                    mobileMenu.style.transition = '';
+                }, 50);
             });
         });
     }
