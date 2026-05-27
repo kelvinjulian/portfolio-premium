@@ -7,7 +7,7 @@
         </a>
 
         <!-- Desktop Menu -->
-        <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600 dark:text-slate-300">
+        <nav class="hidden lg:flex items-center gap-8 font-medium text-slate-600 dark:text-slate-300">
             <a href="#" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Beranda</a>
             <a href="#about" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Tentang</a>
             <a href="#projects" class="hover:text-brand-600 dark:hover:text-white transition-colors py-2 relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-brand-600 after:transition-all hover:after:w-full">Proyek</a>
@@ -22,19 +22,23 @@
             </button>
 
             <!-- Start Project CTA -->
-            <a href="#contact" class="hidden md:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-slate-100 hover:bg-brand-600 dark:hover:bg-brand-500 text-white dark:text-slate-950 dark:hover:text-white font-medium text-sm transition-all shadow-sm hover:shadow-lg hover:shadow-brand-500/20 hover:-translate-y-0.5 duration-300">
+            <a href="#contact" class="hidden lg:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-slate-100 hover:bg-brand-600 dark:hover:bg-brand-500 text-white dark:text-slate-950 dark:hover:text-white font-medium text-sm transition-all shadow-sm hover:shadow-lg hover:shadow-brand-500/20 hover:-translate-y-0.5 duration-300">
                 Mulai Proyek
             </a>
             
             <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden p-2 text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors cursor-pointer" aria-label="Toggle Menu">
-                <i data-lucide="menu" class="w-6 h-6"></i>
+            <button id="menu-btn" class="lg:hidden relative z-[99] p-2 text-slate-700 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors cursor-pointer" aria-label="Toggle Menu">
+                <div class="flex flex-col gap-1.5 w-6 h-5 justify-between items-center group">
+                    <span id="hamburger-line-1" class="w-6 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-all duration-300 transform origin-left"></span>
+                    <span id="hamburger-line-2" class="w-6 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-all duration-300"></span>
+                    <span id="hamburger-line-3" class="w-6 h-0.5 bg-slate-900 dark:bg-white rounded-full transition-all duration-300 transform origin-left"></span>
+                </div>
             </button>
         </div>
     </div>
 
     <!-- Mobile Navigation Menu -->
-    <div id="mobile-menu" class="md:hidden w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-b border-slate-100 dark:border-slate-800/80 shadow-lg absolute top-full left-0 py-6 px-6 flex flex-col gap-4">
+    <div id="mobile-menu" class="lg:hidden w-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-b border-slate-100 dark:border-slate-800/80 shadow-lg absolute top-full left-0 px-6 flex flex-col gap-4">
         <a href="#" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2 border-b border-slate-50 dark:border-slate-800/50">Beranda</a>
         <a href="#about" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2 border-b border-slate-50 dark:border-slate-800/50">Tentang</a>
         <a href="#projects" class="mobile-link text-slate-700 dark:text-slate-300 font-medium hover:text-brand-600 dark:hover:text-brand-400 py-2 border-b border-slate-50 dark:border-slate-800/50">Proyek</a>
