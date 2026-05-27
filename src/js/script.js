@@ -174,22 +174,9 @@ async function init() {
     // 2. Initialize Dark Mode Toggle
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
-        const icon = document.getElementById('theme-toggle-icon');
-        const updateToggleIcon = (isDark) => {
-            if (icon) {
-                icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-            }
-        };
-        
-        // Initial setup of icon
-        const isDark = document.documentElement.classList.contains('dark');
-        updateToggleIcon(isDark);
-        
         themeToggle.addEventListener('click', () => {
             const nowDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', nowDark ? 'dark' : 'light');
-            updateToggleIcon(nowDark);
-            lucide.createIcons();
         });
     }
     
@@ -227,8 +214,6 @@ async function init() {
             if (isMenuOpen) {
                 // Open menu dropdown
                 mobileMenu.classList.add('is-active');
-                // Lock body scroll
-                document.body.classList.add('overflow-hidden');
                 
                 // Animate lines
                 if (line1) line1.classList.add('rotate-45', 'translate-x-1');
@@ -237,8 +222,6 @@ async function init() {
             } else {
                 // Close menu dropdown
                 mobileMenu.classList.remove('is-active');
-                // Unlock body scroll
-                document.body.classList.remove('overflow-hidden');
                 
                 // Reset lines
                 if (line1) line1.classList.remove('rotate-45', 'translate-x-1');
@@ -250,32 +233,11 @@ async function init() {
         menuBtn.addEventListener('click', () => toggleMenu());
         
         mobileLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href');
-                
-                if (targetId && targetId.startsWith('#')) {
-                    e.preventDefault();
-                    
-                    // Close the menu first
-                    toggleMenu(false);
-                    
-                    // Delay execution of scroll
-                    setTimeout(() => {
-                        if (targetId === '#') {
-                            window.scrollTo({
-                                top: 0,
-                                behavior: 'smooth'
-                            });
-                        } else {
-                            const targetSection = document.querySelector(targetId);
-                            if (targetSection) {
-                                targetSection.scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }
-                    }, 150); // 150ms delay
-                }
+            link.addEventListener('click', () => {
+                // Let the browser's native anchor navigation handle the scrolling.
+                // The 'scroll-smooth' class on the <html> tag ensures it will be animated smoothly.
+                // We just need to close the mobile menu.
+                toggleMenu(false);
             });
         });
     }
