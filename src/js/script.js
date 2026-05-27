@@ -233,11 +233,32 @@ async function init() {
         menuBtn.addEventListener('click', () => toggleMenu());
         
         mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                // Let the browser's native anchor navigation handle the scrolling.
-                // The 'scroll-smooth' class on the <html> tag ensures it will be animated smoothly.
-                // We just need to close the mobile menu.
-                toggleMenu(false);
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href');
+                
+                if (targetId === '#' || targetId === '#top-hero' || targetId === '#hero') {
+                    e.preventDefault();
+                    
+                    // Disable transition temporarily to close the menu instantly.
+                    mobileMenu.style.transition = 'none';
+                    toggleMenu(false);
+                    
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                        mobileMenu.style.transition = '';
+                    }, 50);
+                } else {
+                    // Let the browser's native anchor navigation handle other links.
+                    mobileMenu.style.transition = 'none';
+                    toggleMenu(false);
+                    
+                    setTimeout(() => {
+                        mobileMenu.style.transition = '';
+                    }, 50);
+                }
             });
         });
     }
