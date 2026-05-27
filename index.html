@@ -68,12 +68,15 @@
     <!-- Navigation Header Component -->
     <load src="./src/components/Navbar.html" />
 
-    <main class="flex-grow w-full relative overflow-x-clip">
-        <div class="max-w-7xl mx-auto px-6 w-full relative">
-            <!-- Glowing Background Elements -->
-            <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-200/30 blur-[120px] pointer-events-none animate-pulse-slow"></div>
-            <div class="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full bg-purple-200/30 blur-[150px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
-            <div class="absolute bottom-[-5%] left-[10%] w-[500px] h-[500px] rounded-full bg-emerald-100/30 blur-[120px] pointer-events-none animate-pulse-slow" style="animation-delay: 4s;"></div>
+    <main class="flex-grow w-full relative">
+        <!-- Optimized Background Blobs Wrapper to isolate heavy blur paint cycles -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-200/30 blur-[120px] pointer-events-none animate-pulse-slow" style="will-change: transform, opacity;"></div>
+            <div class="absolute top-[40%] right-[-10%] w-[600px] h-[600px] rounded-full bg-purple-200/30 blur-[150px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s; will-change: transform, opacity;"></div>
+            <div class="absolute bottom-[-5%] left-[10%] w-[500px] h-[500px] rounded-full bg-emerald-100/30 blur-[120px] pointer-events-none animate-pulse-slow" style="animation-delay: 4s; will-change: transform, opacity;"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10">
             
             <!-- Hero Section -->
         <!-- Hero Section Component -->
